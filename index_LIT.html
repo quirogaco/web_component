@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/htmx.org@2.0.0-alpha2"></script>
+   
+    <title>HTMX EXAMPLE LIT</title>
+    <style>
+      p {
+        border: 1px dotted black;
+      }
+    </style>
+    
+  </head>
+  <body>
+
+    <script type="module">
+        window._components = {}
+            window._utils = {
+                register: function(component, id) {
+                    window._components[id] = component                    
+                },
+
+                get_component: function(id) {
+                    return window._components[id]
+                }
+            }
+
+
+
+            window.doSomething = function doSomething() {
+                console.log('');
+                console.log('---------------------------------------------------------------');
+                let my_component = window._utils.get_component("my_component");
+                // console.log('do something-0:', my_component.page);
+                // my_component.page += 3;
+                // console.log('do something-1:', my_component.parameters);
+                // console.log('do something-2:', my_component.response());
+            };
+
+        // import {LitElement, html, css} from 'https://cdn.jsdelivr.net/npm/lit@3.1.2/+esm'
+        import {LitElement, html, css} from 'https://cdn.jsdelivr.net/gh/lit/dist@3/all/lit-all.min.js'
+        // console.log(LitElement, html, css)
+        // console.log("CSS:", css)
+
+        class MyElement extends LitElement {
+
+          // static styles = css`p { color: blue }`;
+    
+          static get properties() {
+            return {
+              mood: {type: String},
+              color: {type: String},
+              count: {type: Number}
+            }
+          }
+          
+          static get styles() {
+            return css`.mood { color: green; }`;
+          }
+
+          get parameters() {
+              let data = {'abc': 1, 'def': 'hoyaaa'}
+
+              return JSON.stringify(data)
+          }
+    
+          render() {
+            let content =  html`<button 
+                hx-get="/my-component-clicked2" 
+                hx-vals=${this.parameters}
+
+                hx-on::before-request=" doSomething()"
+                hx-on::after-request="console.log('Done making a request!')"
+
+                hx-target="next div">
+                  Click me FIRSSSSST!
+                </button>
+                Web Components are <p class="mood">${this.mood}-${this.color}</p>!
+                <div></div>
+            `
+            
+            // html`Web Components are <span class="mood">${this.mood}-${this.color}</span>!`
+
+            // htmx.process(this)
+            return content;
+          }
+
+          // createRenderRoot() { return this;}
+
+          firstUpdated() {
+            console.log('this.renderRoot:', this.renderRoot);
+            htmx.process(this.renderRoot)
+          }
+        }
+    
+        customElements.define('my-element', MyElement);
+
+        window.LitElement = LitElement
+    </script>
+      
+    <my-element mood="awesome">ssssss</my-element>      
+    <main>
+
+       
+    </main>
+
+    <script>
+
+        console.log(window.LitElement)
+         
+        
+    </script>
+    
+	
+  </body>
+</html>

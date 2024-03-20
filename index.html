@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="https://unpkg.com/htmx.org@v2.0.0-beta1"></script>
+        <title>HTMX EXAMPLE</title>    
+    </head>
+    <body>
+        <main>
+
+            <!-- <my-component>
+            </my-component> -->
+
+            <popup-info
+                img="img/alt.png"
+                data-text="Your card validation code (CVC)
+                is an extra security feature — it is the last 3 or 4 numbers on the
+                back of your card."
+            >
+            </popup-info>
+
+        </main>
+
+        <script>
+            window._components = {}
+            window._utils = {
+                register: function(component, id) {
+                    window._components[id] = component                    
+                },
+
+                get_component: function(id) {
+                    return window._components[id]
+                }
+            }
+
+
+
+            window.doSomething = function doSomething() {
+                console.log('');
+                console.log('---------------------------------------------------------------');
+                let my_component = window._utils.get_component("my_component");
+                console.log('do something-0:', my_component.page);
+                my_component.page += 3;
+                console.log('do something-1:', my_component.parameters);
+                console.log('do something-2:', my_component.response());
+            };
+
+            class AC_HTMLElement extends HTMLElement {
+                connectedCallback() {
+                    console.log("Custom element added to page.");
+                }
+
+                disconnectedCallback() {
+                    console.log("Custom element removed from page.");
+                }
+
+                adoptedCallback() {
+                    console.log("Custom element moved to new page.");
+                }
+
+                attributeChangedCallback(name, oldValue, newValue) {
+                    console.log(`Attribute ${name} ---> ${oldValue} <-> ${newValue} has changed.`);
+                }
+            
+            }
+
+            class MyComponent extends AC_HTMLElement {
+                static observedAttributes = ["color", "size", "name"];
+
+                get parameters() {
+                    let data = {'abc': 1, 'def': 'hoyaaa'}
+
+                    return JSON.stringify(data)
+                }
+
+                response() {
+                    console.log("aaaaaaaaaaaa")
+                    return "55555555555555555"
+                }
+
+                constructor() {
+                    super();
+                    window._utils.register(this, "my_component")
+
+                    this.page = 210;
+                    // com o llmar funciones al interios del componente
+                    this.innerHTML = `
+                    <button 
+                        hx-get="/my-component-clicked2" 
+                        hx-vals=${this.parameters}
+
+                        hx-on::before-request="doSomething()"
+                        hx-on::after-request="console.log('Done making a request!**%%%$#####')"
+
+                        hx-target="next div">
+                          Click me FIRSSSSST!
+                    </button>
+                    <div></div>
+                    `
+                    
+                    htmx.process(this)
+                }
+            }
+
+            customElements.define('my-component', MyComponent)
+
+
+            // Create a class for the element
+        class PopupInfo extends HTMLElement {
+            constructor() {
+                // Always call super first in constructor
+                super();
+            }
+
+            connectedCallback() {
+                // Create a shadow root
+                const shadow = this.attachShadow({ mode: "open" });
+
+                // Create spans
+                const wrapper = document.createElement("span");
+                wrapper.setAttribute("class", "wrapper");
+
+                const icon = document.createElement("span");
+                icon.setAttribute("class", "icon");
+                icon.setAttribute("tabindex", 0);
+
+                const info = document.createElement("span");
+                info.setAttribute("class", "info");
+
+                // Take attribute content and put it inside the info span
+                const text = this.getAttribute("data-text");
+                info.textContent = text;
+
+                // Insert icon
+                let imgUrl;
+                if (this.hasAttribute("img")) {
+                    imgUrl = this.getAttribute("img");
+                } else {
+                    imgUrl = "img/default.png";
+                }
+
+                const img = document.createElement("img");
+                img.src = imgUrl;
+                icon.appendChild(img);
+
+                // Create some CSS to apply to the shadow dom
+                const style = document.createElement("style");
+                console.log(style.isConnected);
+
+                style.textContent = `
+                    .wrapper {
+                        position: relative;
+                    }
+
+                    .info {
+                        font-size: 0.8rem;
+                        width: 200px;
+                        display: inline-block;
+                        border: 1px solid black;
+                        padding: 10px;
+                        background: white;
+                        border-radius: 10px;
+                        opacity: 0;
+                        transition: 0.6s all;
+                        position: absolute;
+                        bottom: -100px;
+                        left: 10px;
+                        z-index: 3;
+                    }
+
+                    img {
+                        width: 1.2rem;
+                    }
+
+                    .icon:hover + .info, .icon:focus + .info {
+                        opacity: 1;
+                    }
+                `;
+
+                // Attach the created elements to the shadow dom
+                shadow.appendChild(style);
+                console.log(style.isConnected);
+                shadow.appendChild(wrapper);
+                wrapper.appendChild(icon);
+                wrapper.appendChild(info);
+            }
+        }
+
+        customElements.define("popup-info", PopupInfo);
+
+
+        </script>
+
+    </body>
+</html>

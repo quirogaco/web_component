@@ -8,10 +8,12 @@
         <title>HTMX EXAMPLE</title>    
     </head>
     <body>
+        <script src="/static/js/ac_core.js"></script>
+
         <main>
 
             <popup-info
-                img="img/alt.png"
+                img="static/img/whatapp.png"
                 data-text="Your card validation code (CVC)
                 is an extra security feature — it is the last 3 or 4 numbers on the
                 back of your card."
@@ -20,51 +22,17 @@
 
         </main>
 
-        <script>            
-            let style_text = `
-                        .wrapper {
-                            position: relative;
-                        }
+        <script>                        
 
-                        .info {
-                            font-size: 0.8rem;
-                            width: 200px;
-                            display: inline-block;
-                            border: 1px solid black;
-                            padding: 10px;
-                            background: white;
-                            border-radius: 10px;                            
-                            transition: 0.6s all;
-                            position: absolute;
-                            bottom: 20px;
-                            left: 10px;
-                            z-index: 3;
-
-                            opacity: 0;
-                        }
-
-                        img {
-                            width: 1.2rem;
-                        }
-
-                        .icon:hover + .info, .icon:focus + .info {
-                            opacity: 1;
-                        }
-                    `;
+            let style_text = ` `;
 
             // Create a class for the element
-            class PopupInfo extends HTMLElement {
-                constructor() {
-                    // Always call super first in constructor
-                    super();
-                    console.log("THIS 12:", this)
-                }
-
-                connectedCallback() {
+            class PopupInfo extends AC_HTMLElement {
+                connectedCallback_new() {
                     // Create a shadow root
-                    console.log("this.rootElemt")
-                    // const shadow = this.attachShadow({ mode: "open" });
-                    const shadow = this;
+                    console.log("xxxxxxxx-->this.rootElemt<---------------")
+                    const shadow = this.attachShadow({ mode: "open" });
+                    // const shadow = this;
                     // Create spans
                     const wrapper = document.createElement("span");
                     wrapper.setAttribute("class", "wrapper");
@@ -80,12 +48,12 @@
                     const text = this.getAttribute("data-text");
                     info.textContent = text;
 
-                    // Insert icon
+                    
                     let imgUrl;
                     if (this.hasAttribute("img")) {
                         imgUrl = this.getAttribute("img");
                     } else {
-                        imgUrl = "img/default.png";
+                        imgUrl = "static/img/default.png";
                     }
 
                     const img = document.createElement("img");

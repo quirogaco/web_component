@@ -4,9 +4,12 @@ import os
 root = os.path.dirname(os.path.abspath(__file__))
 
 from fastapi import FastAPI, Response, Request
+from fastapi.staticfiles import StaticFiles
 import uvicorn
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
 async def main():

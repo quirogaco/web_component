@@ -1,81 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <script src="https://unpkg.com/htmx.org@v2.0.0-beta1"></script>
-        <title>HTMX EXAMPLE</title>    
-    </head>
-    <body>
-        <script src="/static/js/ac_core.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/htmx.org@v2.0.0-beta1"></script>
+    <title>HTMX EXAMPLE</title>    
+</head>
+<body>
+    <main>
+        
+        <data-table name="usuarios"
+            img="static/img/whatapp.png"
+            data-text="Your card validation code (CVC)
+            is an extra security feature — it is the last 3 or 4 numbers on the
+            back of your card."
+        >
+        </data-table>
 
-        <main>
+    </main>
 
-            <popup-info
-                img="static/img/whatapp.png"
-                data-text="Your card validation code (CVC)
-                is an extra security feature — it is the last 3 or 4 numbers on the
-                back of your card."
-            >
-            </popup-info>
+    <script type="module">   
+        import { component_classes, component_instances} from "/static/js/ui/components/core.js"
+        import "/static/js/ui/components/DataTable/DataTable.js"    
+        console.log(component_classes)
+        console.log("")
+        console.log("")
+        console.log("")
+        console.log(component_instances)
 
-        </main>
+    </script>
 
-        <script>                        
-
-            let style_text = ` `;
-
-            // Create a class for the element
-            class PopupInfo extends AC_HTMLElement {
-                connectedCallback_new() {
-                    // Create a shadow root
-                    console.log("xxxxxxxx-->this.rootElemt<---------------")
-                    const shadow = this.attachShadow({ mode: "open" });
-                    // const shadow = this;
-                    // Create spans
-                    const wrapper = document.createElement("span");
-                    wrapper.setAttribute("class", "wrapper");
-
-                    const icon = document.createElement("span");
-                    icon.setAttribute("class", "icon");
-                    icon.setAttribute("tabindex", 0);
-
-                    const info = document.createElement("span");
-                    info.setAttribute("class", "info");
-
-                    // Take attribute content and put it inside the info span
-                    const text = this.getAttribute("data-text");
-                    info.textContent = text;
-
-                    
-                    let imgUrl;
-                    if (this.hasAttribute("img")) {
-                        imgUrl = this.getAttribute("img");
-                    } else {
-                        imgUrl = "static/img/default.png";
-                    }
-
-                    const img = document.createElement("img");
-                    img.src = imgUrl;
-                    icon.appendChild(img);
-
-                    // Create some CSS to apply to the shadow dom
-                    const style = document.createElement("style");
-                    
-                    style.textContent = style_text;
-
-                    // Attach the created elements to the shadow dom
-                    shadow.appendChild(style);        
-                    shadow.appendChild(wrapper);
-                    wrapper.appendChild(icon);
-                    wrapper.appendChild(info);
-                }
-            }
-
-            customElements.define("popup-info", PopupInfo);
-
-        </script>
-
-    </body>
+</body>
 </html>

@@ -5,54 +5,65 @@ function register_component_instance(name, component) {
     component_instances[name] = component                    
 }
 
+
 function get_component_instance(name) {
     return component_instances[name]
 }
 
+
 function register_component_class(name, component) {
     component_classes[name] = component                    
 }
+
 
 function get_component_class(name) {
     return component_classes[name]
 }
 
 
+function create_component(type, attributes={}) {
+    let el = document.createElement(type);
+    for (const property in attributes) {
+        el.setAttribute(property, attributes[property]);
+    }
+    
+    return el;
+}
+
+
 class _HTMLElement extends HTMLElement {
+    static observedAttributes = ["id", "name", "props"];
+
     constructor() {
         super();        
         // this._root = this.attachShadow({ mode: "open" });
         this._root = this;
     }
 
-    connectedCallback() {
-        console.log("Custom element added to page.");
-        let name = this.getAttribute("name");
-        if (name !== null) {
-            register_component_instance(name, this)
-        }
-        console.log("NAME:", name)
+    connectedCallback() {        
         this._connectedCallback()
     }
 
     disconnectedCallback() {
-        console.log("Custom element removed from page.");
+        this._disconnectedCallback(name, oldValue, newValue) 
     }
 
     adoptedCallback() {
-        console.log("Custom element moved to new page.");
+        this._adoptedCallback(name, oldValue, newValue) 
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        console.log(`Attribute ${name} ---> ${oldValue} <-> ${newValue} has changed.`);
+        console.log(`Attribute (${name}) --> (${oldValue}) <-> (${newValue}) -> has changed.`);
+        this._attributeChangedCallback(name, oldValue, newValue) 
     }
 
+
+    _connectedCallback() {}
+    _disconnectedCallback() {}
+    _adoptedCallback() {}
+    _attributeChangedCallback(name, oldValue, newValue) {}
 }
 
-
-function create_component(type, name) {
-    return "";
-}
 
 export { 
     component_classes,  
@@ -61,5 +72,6 @@ export {
     get_component_instance,
     register_component_class,
     get_component_class,
-    _HTMLElement, 
+    create_component,
+    _HTMLElement
 };

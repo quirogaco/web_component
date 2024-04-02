@@ -10,25 +10,33 @@
 <body>
     <main>
         
-        <data-table name="usuarios"
-            img="static/img/whatapp.png"
-            data-text="Your card validation code (CVC)
-            is an extra security feature — it is the last 3 or 4 numbers on the
-            back of your card."
-        >
-        </data-table>
-
+        <DataTable id="usuarios_id" name="usuarios">
+            <DataTableHeader id="enbezado_id" name="enbezado">
+              <DataTableColumn id="enbezado_id_0" name="enbezado_0"></DataTableColumn>
+              <DataTableColumn id="enbezado_id_1" name="enbezado_1"></DataTableColumn>
+              <DataTableColumn id="enbezado_id_2" name="enbezado_2"></DataTableColumn>
+              <DataTableColumn id="enbezado_id_3" name="enbezado_3"></DataTableColumn>
+              <DataTableColumn id="enbezado_id_4" name="enbezado_4"></DataTableColumn>
+            </DataTableHeader>
+        </DataTable>
+        
     </main>
 
     <script type="module">   
-        import { component_classes, component_instances} from "/static/js/ui/components/core.js"
-        import "/static/js/ui/components/DataTable/DataTable.js"    
-        console.log(component_classes)
-        console.log("")
-        console.log("")
-        console.log("")
-        console.log(component_instances)
 
+        import { create_component } from "/static/js/ui/components/core.js"
+        import "/static/js/ui/components/DataTable/DataTable.js"    
+        
+        const el = document.createElement('data-table')
+        el.setAttribute('name', 'Perdro');
+        document.body.append(el)      
+        
+        const main = document.querySelector("main")
+        let el1 = create_component('data-table', {'name': 'aNTONIO'})
+        el1.setAttribute('size', 1231);
+        main.append(el1)  
+        console.log(el1)
+        
     </script>
 
 </body>

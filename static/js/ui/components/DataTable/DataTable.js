@@ -1,50 +1,47 @@
 import { register_component_class, _HTMLElement } from "/static/js/ui/components/core.js"
 
+let count = 0;
 
-let style_text = ` `;
-
-// Create a class for the element
 class DataTable extends _HTMLElement {
     _connectedCallback() {
-        // Create spans
-        const wrapper = document.createElement("span");
-        wrapper.setAttribute("class", "wrapper");
+        const div = document.createElement("div");
+        count += 1;
+        div.innerText = "tabla_" + count.toString()
+        this._root.appendChild(div);
 
-        const icon = document.createElement("span");
-        icon.setAttribute("class", "icon");
-        icon.setAttribute("tabindex", 0);
-
-        const info = document.createElement("span");
-        info.setAttribute("class", "info");
-
-        // Take attribute content and put it inside the info span
-        const text = this.getAttribute("data-text");
-        info.textContent = text;
-
-        
-        let imgUrl;
-        if (this.hasAttribute("img")) {
-            imgUrl = this.getAttribute("img");
-        } else {
-            imgUrl = "static/img/default.png";
-        }
-
-        const img = document.createElement("img");
-        img.src = imgUrl;
-        icon.appendChild(img);
-
-        // Create some CSS to apply to the shadow dom
-        const style = document.createElement("style");
-        
-        style.textContent = style_text;
-
-        // Attach the created elements to the shadow dom
-        this._root.appendChild(style);        
-        this._root.appendChild(wrapper);
-        wrapper.appendChild(icon);
-        wrapper.appendChild(info);
+        const table = document.createElement("table");        
+        this._root.appendChild(table);
     }
 }
-
 customElements.define("data-table", DataTable);
 register_component_class("data-table", DataTable)
+
+
+class DataTableHeader extends _HTMLElement {
+    _connectedCallback() {
+        const header = document.createElement("tr");        
+        this._root.appendChild(header);
+    }
+}
+customElements.define("data-table-header", DataTableHeader);
+register_component_class("data-table-header", DataTableHeader)
+
+
+class DataTableColumn extends _HTMLElement {
+    _connectedCallback() {
+        const column = document.createElement("th");        
+        this._root.appendChild(column);
+    }
+}
+customElements.define("data-table-column", DataTableColumn);
+register_component_class("data-table-column", DataTableColumn)
+
+
+class DataTableBody extends _HTMLElement {
+    _connectedCallback() {
+        const body = document.createElement("tr");        
+        this._root.appendChild(body);
+    }
+}
+customElements.define("data-table-body", DataTableBody);
+register_component_class("data-table-body", DataTableBody)

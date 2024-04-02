@@ -7,6 +7,8 @@ from fastapi import FastAPI, Response, Request
 from fastapi.staticfiles import StaticFiles
 import uvicorn
 
+from components.Table.DataTable import *
+
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -58,7 +60,27 @@ async def my_component_clicked2(request: Request):
      
     return Response(content=data, media_type="text/html")
 
-    
+
+
+# print("div:", str(div))
+
+params = {"name":"usuarios", "id": "usuarios_id"}
+table = DataTable(**params)
+
+params = {"name":"enbezado", "id": "enbezado_id"}
+header = DataTableHeader(**params)
+
+for i in range(5):
+    params = {"name":("enbezado_"+str(i)), "id": ("enbezado_id_"+str(i))}
+    column = DataTableColumn(**params)
+    header.add(column)
+
+table.add(header)
+
+print()
+print(table)
+print()
+
 if __name__ == '__main__':
     # host = "172.19.106.35"
     host = "192.168.111.2"

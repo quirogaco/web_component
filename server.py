@@ -8,6 +8,7 @@ from fastapi.staticfiles import StaticFiles
 import uvicorn
 
 from components.Table.DataTable import *
+import dominate.tags as tags
 
 app = FastAPI()
 
@@ -64,21 +65,40 @@ async def my_component_clicked2(request: Request):
 
 # print("div:", str(div))
 
+# params = {"name":"usuarios", "id": "usuarios_id"}
+# table = DataTable(**params)
+
+# params = {"name":"enbezado", "id": "enbezado_id"}
+# header = DataTableHeader(**params)
+
+# for i in range(5):
+#     params = {"name":("enbezado_"+str(i)), "id": ("enbezado_id_"+str(i))}
+#     column = DataTableHeaderCell(**params)
+#     header.add(column)
+
+# table.add(header)
+
 params = {"name":"usuarios", "id": "usuarios_id"}
-table = DataTable(**params)
+table = tags.table(**params)
+
+caption = tags.caption("TITULO DE LA TABLA")
+table.add(caption)
 
 params = {"name":"enbezado", "id": "enbezado_id"}
-header = DataTableHeader(**params)
+header = tags.thead(**params)
 
 for i in range(5):
-    params = {"name":("enbezado_"+str(i)), "id": ("enbezado_id_"+str(i))}
-    column = DataTableColumn(**params)
+    texto = ("enbezado_"+str(i))
+    params = {"name":texto, "id": ("enbezado_id_"+str(i))}
+    column = tags.th(texto, **params)
     header.add(column)
 
 table.add(header)
 
-print()
+print("**************************************")
 print(table)
+print("**************************************")
+print()
 print()
 
 if __name__ == '__main__':

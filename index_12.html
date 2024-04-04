@@ -10,32 +10,43 @@
 <body>
     <main>
         
-        <DataTable id="usuarios_id" name="usuarios">
-            <DataTableHeader id="enbezado_id" name="enbezado">
-              <DataTableColumn id="enbezado_id_0" name="enbezado_0"></DataTableColumn>
-              <DataTableColumn id="enbezado_id_1" name="enbezado_1"></DataTableColumn>
-              <DataTableColumn id="enbezado_id_2" name="enbezado_2"></DataTableColumn>
-              <DataTableColumn id="enbezado_id_3" name="enbezado_3"></DataTableColumn>
-              <DataTableColumn id="enbezado_id_4" name="enbezado_4"></DataTableColumn>
-            </DataTableHeader>
-        </DataTable>
+        <table id="usuarios_id" name="usuarios">
+            <caption>TITULO DE LA TABLA</caption>
+            <thead id="enbezado_id" name="enbezado">
+              <th id="enbezado_id_0" name="enbezado_0">enbezado_0</th>
+              <th id="enbezado_id_1" name="enbezado_1">enbezado_1</th>
+              <th id="enbezado_id_2" name="enbezado_2">enbezado_2</th>
+              <th id="enbezado_id_3" name="enbezado_3">enbezado_3</th>
+              <th id="enbezado_id_4" name="enbezado_4">enbezado_4</th>
+            </thead>
+        </table>
         
     </main>
 
     <script type="module">   
 
-        import { create_component } from "/static/js/ui/components/core.js"
-        import "/static/js/ui/components/DataTable/DataTable.js"    
+        // import { create_component } from "/static/js/ui/components/core.js"
+        // import "/static/js/ui/components/DataTable/DataTable.js"    
         
-        const el = document.createElement('data-table')
-        el.setAttribute('name', 'Perdro');
-        document.body.append(el)      
+        // const el = document.createElement('data-table')
+        // el.setAttribute('name', 'Perdro');
+        // document.body.append(el)      
         
-        const main = document.querySelector("main")
-        let el1 = create_component('data-table', {'name': 'aNTONIO'})
-        el1.setAttribute('size', 1231);
-        main.append(el1)  
-        console.log(el1)
+        // const main = document.querySelector("main")
+        // let el1 = create_component('data-table', {'name': 'aNTONIO'})
+        // el1.setAttribute('size', 1231);
+        // main.append(el1)  
+        // console.log(el1)
+
+        // <data-table id="usuarios_id" name="usuarios">
+        //     <data-table-header id="enbezado_id" name="enbezado">
+        //       <data-table-header-cell id="enbezado_id_0" name="enbezado_0"></data-table-header-cell>
+        //       <data-table-header-cell id="enbezado_id_1" name="enbezado_1"></data-table-header-cell>
+        //       <data-table-header-cell id="enbezado_id_2" name="enbezado_2"></data-table-header-cell>
+        //       <data-table-header-cell id="enbezado_id_3" name="enbezado_3"></data-table-header-cell>
+        //       <data-table-header-cell id="enbezado_id_4" name="enbezado_4"></data-table-header-cell>
+        //     </data-table-header>
+        // </data-table>
         
     </script>
 

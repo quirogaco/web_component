@@ -40,7 +40,12 @@ class _HTMLElement extends HTMLElement {
         this._root = this;
     }
 
-    connectedCallback() {        
+    connectedCallback() {   
+        console.log(this);
+        var children = this._root.childNodes;
+        children.forEach(function(item) {
+            console.log(item.nodeType, item.nodeName, item.nodeValue);
+        });     
         this._connectedCallback()
     }
 
@@ -53,10 +58,9 @@ class _HTMLElement extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        console.log(`Attribute (${name}) --> (${oldValue}) <-> (${newValue}) -> has changed.`);
+        // console.log(`Attribute (${name}) --> (${oldValue}) <-> (${newValue}) -> has changed.`);
         this._attributeChangedCallback(name, oldValue, newValue) 
     }
-
 
     _connectedCallback() {}
     _disconnectedCallback() {}
